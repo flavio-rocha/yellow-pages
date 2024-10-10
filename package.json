@@ -1,0 +1,25 @@
+{
+  "name": "rpd7-task",
+  "version": "1.0.0",
+  "description": "YellowPages App",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "concurrently \"npm start --prefix client\" \"npm start --prefix backend\"",
+    "build": "concurrently \"npm run build --prefix client\" \"npm run build --prefix backend\""
+  },
+  "dependencies": {
+    "concurrently": "^9.0.1"
+  },
+  "author": "Flavio Rocha",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.1",
+    "prettier": "^3.3.3"
+  }
+}
