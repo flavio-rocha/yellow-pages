@@ -6,7 +6,7 @@ const parsePhoneNumber = (phoneNumber: string): number => {
   return parseInt(phoneNumber.replace(/\D/g, ''), 10);
 };
 
-export class PersonRepository {
+export class PeopleRepository {
   private peopleMap: Map<number, Person>;
 
   constructor() {
