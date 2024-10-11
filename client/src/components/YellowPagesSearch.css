@@ -1,0 +1,33 @@
+.yellow-pages-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 80vw;
+    margin-top: 20vh;
+}
+
+.search-input {
+    width: 50%;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 24px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: dodgerblue;
+}
+
+.search-results-container {
+    padding: 0;
+    margin-top: 20px;
+    width: 50%;
+}
+
+.search-result-item {
+    padding: 10px;
+    border-bottom: 1px solid #cccccc;
+}
