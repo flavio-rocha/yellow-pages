@@ -14,7 +14,7 @@ export class PeopleRepository {
   }
 
   private loadDataFromFile(): Map<number, Person> {
-    const filePath = './data/contacts.json';
+    const filePath = '../data/contacts.json';
     const data = fs.readFileSync(filePath, 'utf-8');
     const jsonData: Contact[] = JSON.parse(data);
     const dataMap = new Map<number, Person>();
@@ -24,18 +24,19 @@ export class PeopleRepository {
         dataMap.set(parsePhoneNumber(contact.phone_number), Person.create(contact));
       }
     });
+    console.log('Data loaded, number of items:', dataMap.size);
 
     return dataMap;
   }
 
   searchPhoneNumber(phoneNumber: string): Person | null {
-    return this.peopleMap.get(parsePhoneNumber(phoneNumber)) ?? null;
+    return this.peopleMap.get(parseInt(phoneNumber)) ?? null;
   }
 
   searchNameOrAge(name: string, age: string) {
     return Array.from(this.peopleMap.values()).filter((person: Person) => {
       const hasName = name ? person.searchIndex.includes(name) : true;
-      const hasAge = name ? person.searchIndex.includes(age) : true;
+      const hasAge = age ? person.searchIndex.includes(age) : true;
       return hasName && hasAge;
     });
   }

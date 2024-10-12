@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { extractDataToMap } from '../../../middleware/dataHandler';
 
 const findPhoneNumber = (text: string): string => {
   const phoneRegex = /\(?(\d{3})\)?\s?(\d{7})/;

@@ -3,27 +3,20 @@ import { PeopleRepository } from '../repositories/peopleRepository';
 
 const peopleService = new PeopleRepository();
 
-const parsePhoneNumberFromInput = (text: string): string => {
+const inputParser = (text: string): { parsedName: string; parsedAge: string; parsedPhoneNumber: string } => {
   const phoneNumberRegex = /\(?(\d{3})\)?\s?(\d{7})/;
   const matchPhoneNumber = text.match(phoneNumberRegex);
-  if (matchPhoneNumber && phoneNumberRegex[1].length + phoneNumberRegex[2].length) {
-    return `${matchPhoneNumber[1]}${matchPhoneNumber[2]}`;
-  }
-  return '';
-};
+  const parsedPhoneNumber = matchPhoneNumber ? `${matchPhoneNumber[1]}${matchPhoneNumber[2]}` : '';
+  let input = text.replace(phoneNumberRegex, '');
 
-const parseNameAndAge = (text: string): { name: string; age: string } | null => {
-  const matchName = text.match(/[a-zA-Z\s]+/);
-  const matchAge = text.match(/\d+/);
+  const matchAge = input.match(/\d{1,2}/);
+  const parsedAge = matchAge ? `0${matchAge[0]}`.slice(-2) : '';
+  input = input.replace(/\d{1,2}/, '');
 
-  const name = matchName ? matchName[0].trim() : '';
-  const age = matchAge ? matchAge[0].trim() : '';
+  const matchName = input.match(/[a-zA-Z\s]+/);
+  const parsedName = matchName ? matchName[0].trim() : '';
 
-  if (name || age) {
-    return { name, age };
-  }
-
-  return null;
+  return { parsedName, parsedAge, parsedPhoneNumber };
 };
 
 export const search = (req: Request, res: Response) => {
@@ -34,8 +27,8 @@ export const search = (req: Request, res: Response) => {
   }
 
   try {
-    const parsedPhoneNumber = parsePhoneNumberFromInput(searchInput);
-    const { parsedName = '', parsedAge = '' } = parseNameAndAge(searchInput);
+    const { parsedName, parsedAge, parsedPhoneNumber } = inputParser(searchInput);
+    console.log(`Parsed query name:${parsedName} age:${parsedAge} phoneNumber:${parsedPhoneNumber}`);
 
     if (parsedPhoneNumber) {
       const person = peopleService.searchPhoneNumber(parsedPhoneNumber);
@@ -45,6 +38,8 @@ export const search = (req: Request, res: Response) => {
 
         if (matchesName && matchesAge) {
           return res.status(200).json([person]);
+        } else {
+          return res.status(404).json({ message: 'Person not found' });
         }
       }
     }

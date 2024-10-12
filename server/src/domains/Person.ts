@@ -4,7 +4,7 @@ export class Person {
   constructor(
     public uuid: string,
     public picture: string,
-    public birthday: string,
+    public age: string,
     public name: string,
     public address: string,
     public phoneNumber: string,
@@ -12,7 +12,7 @@ export class Person {
   ) {}
 
   static getCurrentAge(dateOfBirth: string) {
-    const age = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
+    const age = new Date().getFullYear() - new Date(dateOfBirth.replace(/\s/g, '')).getFullYear();
     return `0${age}`.slice(-2);
   }
 
@@ -24,7 +24,7 @@ export class Person {
     return new Person(
       contact._id,
       contact.picture,
-      contact.birthday,
+      this.getCurrentAge(contact.birthday.slice()),
       contact.name,
       contact.address,
       contact.phone_number,
