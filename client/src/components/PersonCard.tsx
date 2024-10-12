@@ -6,6 +6,8 @@ interface PersonCardProps {
 }
 
 const PersonCard: FC = ({ props }) => {
+  const imgSource = `/src/assets/images/${props.picture}`;
+
   return (
     <div className={'person-data'}>
       <div>
@@ -14,7 +16,7 @@ const PersonCard: FC = ({ props }) => {
         <div>Phone: {props.phoneNumber}</div>
       </div>
       <div className={'person-image'}>
-        <img src={props.picture} width={100} height={130} />
+        <img src={imgSource} width={100} height={130} />
       </div>
     </div>
   );
