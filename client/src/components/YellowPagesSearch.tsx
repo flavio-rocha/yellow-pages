@@ -2,14 +2,27 @@ import { FC, useState } from 'react';
 import { useDebounce } from '../hooks/useDebounce.ts';
 import { useSearch } from '../hooks/useSearch.ts';
 import './YellowPagesSearch.css';
+import PersonCard from './PersonCard.tsx';
 
 const YellowPagesSearch: FC = () => {
   const [text, setText] = useState('');
   const debouncedInput = useDebounce(text, 300);
   const { data, isLoading, isError } = useSearch(debouncedInput);
 
+  const maxCards = 12;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const pageData = data?.slice((currentPage - 1) * maxCards, currentPage * maxCards);
+
+  const paginatorHandler = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const totalPages = Math.ceil(data?.length / maxCards);
+
   return (
     <div className="yellow-pages-container">
+      <h1>Rapid7 Yellow Pages</h1>
       <input
         type="text"
         value={text}
@@ -19,7 +32,18 @@ const YellowPagesSearch: FC = () => {
       />
       {isLoading && <p>Loading ...</p>}
       {isError && <p>Something went wrong</p>}
-      <div className={'search-results-container'}>{data?.map((person) => <div>{person.name}</div>)}</div>
+      {data && data.length > maxCards && (
+        <div className={'pagination'}>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button key={i} className={currentPage === i + 1 ? 'active' : ''} onClick={() => paginatorHandler(i + 1)}>
+              {i > 0} {i + 1} {i < totalPages - 1}
+            </button>
+          ))}
+        </div>
+      )}
+      <div className={'people-container'}>
+        {pageData?.map((person) => <PersonCard key={person.phoneNumber} props={person} />)}
+      </div>
     </div>
   );
 };
