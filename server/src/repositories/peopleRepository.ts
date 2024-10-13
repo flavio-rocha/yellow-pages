@@ -13,10 +13,12 @@ export class PeopleRepository {
     this.peopleMap = this.loadDataFromFile();
   }
 
+  // add try catch
   private loadDataFromFile(): Map<number, Person> {
     const filePath = '../data/contacts.json';
     const data = fs.readFileSync(filePath, 'utf-8');
     const jsonData: Contact[] = JSON.parse(data);
+
     const dataMap = new Map<number, Person>();
 
     jsonData.forEach((contact: Contact) => {
@@ -24,8 +26,8 @@ export class PeopleRepository {
         dataMap.set(parsePhoneNumber(contact.phone_number), Person.create(contact));
       }
     });
-    console.log('Data loaded, number of items:', dataMap.size);
 
+    console.log('Data loaded, number of items:', dataMap.size);
     return dataMap;
   }
 
@@ -33,7 +35,7 @@ export class PeopleRepository {
     return this.peopleMap.get(parseInt(phoneNumber)) ?? null;
   }
 
-  searchNameOrAge(name: string, age: string) {
+  searchNameOrAge(name: string, age: string): Person[] {
     return Array.from(this.peopleMap.values()).filter((person: Person) => {
       const hasName = name ? person.searchIndex.includes(name) : true;
       const hasAge = age ? person.searchIndex.includes(age) : true;

@@ -1,3 +1,3 @@
 import peopleRoutes from './peopleRoutes';
 
-export default { peopleRoutes, };
+export default { peopleRoutes };
