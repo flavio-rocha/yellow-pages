@@ -13,6 +13,7 @@ export class PeopleRepository {
     this.peopleMap = this.loadDataFromFile();
   }
 
+  // add try catch
   private loadDataFromFile(): Map<number, Person> {
     const filePath = '../data/contacts.json';
     const data = fs.readFileSync(filePath, 'utf-8');
@@ -34,7 +35,7 @@ export class PeopleRepository {
     return this.peopleMap.get(parseInt(phoneNumber)) ?? null;
   }
 
-  searchNameOrAge(name: string, age: string) {
+  searchNameOrAge(name: string, age: string): Person[] {
     return Array.from(this.peopleMap.values()).filter((person: Person) => {
       const hasName = name ? person.searchIndex.includes(name) : true;
       const hasAge = age ? person.searchIndex.includes(age) : true;
