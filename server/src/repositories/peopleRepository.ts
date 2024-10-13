@@ -17,6 +17,7 @@ export class PeopleRepository {
     const filePath = '../data/contacts.json';
     const data = fs.readFileSync(filePath, 'utf-8');
     const jsonData: Contact[] = JSON.parse(data);
+
     const dataMap = new Map<number, Person>();
 
     jsonData.forEach((contact: Contact) => {
@@ -24,8 +25,8 @@ export class PeopleRepository {
         dataMap.set(parsePhoneNumber(contact.phone_number), Person.create(contact));
       }
     });
-    console.log('Data loaded, number of items:', dataMap.size);
 
+    console.log('Data loaded, number of items:', dataMap.size);
     return dataMap;
   }
 

@@ -32,6 +32,7 @@ const YellowPagesSearch: FC = () => {
       />
       {isLoading && <p>Loading ...</p>}
       {isError && <p>Something went wrong</p>}
+      {!isLoading && data && data.length === 0 && <p>No results found for {debouncedInput} </p>}
       {data && data.length > maxCards && (
         <div className={'pagination'}>
           {Array.from({ length: totalPages }, (_, i) => (

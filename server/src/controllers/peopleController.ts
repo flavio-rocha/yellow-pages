@@ -9,7 +9,7 @@ const inputParser = (text: string): { parsedName: string; parsedAge: string; par
   const parsedPhoneNumber = matchPhoneNumber ? `${matchPhoneNumber[1]}${matchPhoneNumber[2]}` : '';
   let input = text.replace(phoneNumberRegex, '');
 
-  const matchAge = input.match(/\d{1,2}/);
+  const matchAge = input.match(/\b\d{1,2}\b/);
   const parsedAge = matchAge ? `0${matchAge[0]}`.slice(-2) : '';
   input = input.replace(/\d{1,2}/, '');
 
@@ -23,12 +23,12 @@ export const search = (req: Request, res: Response) => {
   const searchInput: string = req.query.text as string;
 
   if (!searchInput) {
-    return res.status(400).json({ message: 'No query' });
+    return res.status(400).json({ message: 'No valid query input' });
   }
 
   try {
     const { parsedName, parsedAge, parsedPhoneNumber } = inputParser(searchInput);
-    console.log(`Parsed query name:${parsedName} age:${parsedAge} phoneNumber:${parsedPhoneNumber}`);
+    console.log(`Parsed query with name:${parsedName} age:${parsedAge} phoneNumber:${parsedPhoneNumber}`);
 
     if (parsedPhoneNumber) {
       const person = peopleService.searchPhoneNumber(parsedPhoneNumber);
@@ -38,8 +38,6 @@ export const search = (req: Request, res: Response) => {
 
         if (matchesName && matchesAge) {
           return res.status(200).json([person]);
-        } else {
-          return res.status(404).json({ message: 'Person not found' });
         }
       }
     }
@@ -58,6 +56,9 @@ export const search = (req: Request, res: Response) => {
       }
     }
 
-    return res.status(404).json({ message: 'Query found no match' });
-  } catch (e) {}
+    return res.status(200).json([]);
+  } catch (e) {
+    console.error('server error ', e);
+    return res.status(500).send('Something is wrong');
+  }
 };
