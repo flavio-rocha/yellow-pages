@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import './PersonCard.css';
+import { Person } from '../services/searchApi.ts';
 
 interface PersonCardProps {
-  props: { picture: string; age: string; name: string; address: string; phoneNumber: string };
+  props: Person;
 }
 
-const PersonCard: FC = ({ props }) => {
+const PersonCard: FC<PersonCardProps> = ({ props }) => {
   const imgSource = `/src/assets/images/${props.picture}`;
 
   return (
@@ -16,7 +17,7 @@ const PersonCard: FC = ({ props }) => {
         <div>Phone: {props.phoneNumber}</div>
       </div>
       <div className={'person-image'}>
-        <img src={imgSource} width={100} height={130} />
+        <img src={imgSource} width={100} height={130} alt={'Image not provided'} />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { useDebounce } from '../hooks/useDebounce.ts';
 import { useSearch } from '../hooks/useSearch.ts';
 import './YellowPagesSearch.css';
 import PersonCard from './PersonCard.tsx';
+import { Person } from '../services/searchApi.ts';
 
 const YellowPagesSearch: FC = () => {
   const [text, setText] = useState('');
@@ -33,6 +34,7 @@ const YellowPagesSearch: FC = () => {
       {isLoading && <p>Loading ...</p>}
       {isError && <p>Something went wrong</p>}
       {!isLoading && data && data.length === 0 && <p>No results found for {debouncedInput} </p>}
+
       {data && data.length > maxCards && (
         <div className={'pagination'}>
           {Array.from({ length: totalPages }, (_, i) => (
@@ -42,8 +44,9 @@ const YellowPagesSearch: FC = () => {
           ))}
         </div>
       )}
+
       <div className={'people-container'}>
-        {pageData?.map((person) => <PersonCard key={person.phoneNumber} props={person} />)}
+        {pageData?.map((person: Person) => <PersonCard key={person.phoneNumber} props={person} />)}
       </div>
     </div>
   );

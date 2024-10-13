@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { get } from '../services/searchApi.ts';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { get, Person } from '../services/searchApi.ts';
 
-export const useSearch = (text) => {
+export const useSearch = (text): UseQueryResult<Person[], Error> => {
   return useQuery({
     queryKey: ['search', text],
     queryFn: async () => await get(text),
