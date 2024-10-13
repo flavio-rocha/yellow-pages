@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PeopleRepository } from '../repositories/peopleRepository';
+import { mapPerson } from '../mappers/personMapper';
 
 const peopleService = new PeopleRepository();
 
@@ -28,7 +29,7 @@ export const search = (req: Request, res: Response) => {
 
   try {
     const { parsedName, parsedAge, parsedPhoneNumber } = inputParser(searchInput);
-    console.log(`Parsed query with name:${parsedName} age:${parsedAge} phoneNumber:${parsedPhoneNumber}`);
+    console.debug(`Parsed query with name:${parsedName} age:${parsedAge} phoneNumber:${parsedPhoneNumber}`);
 
     if (parsedPhoneNumber) {
       const person = peopleService.searchPhoneNumber(parsedPhoneNumber);
@@ -37,7 +38,7 @@ export const search = (req: Request, res: Response) => {
         const matchesAge = parsedAge ? person.searchIndex.includes(parsedAge) : true;
 
         if (matchesName && matchesAge) {
-          return res.status(200).json([person]);
+          return res.status(200).json([mapPerson(person)]);
         }
       }
     }
@@ -47,12 +48,12 @@ export const search = (req: Request, res: Response) => {
 
       if (results) {
         if (parsedName && parsedAge) {
-          const asx = results.filter(
+          const filterPeople = results.filter(
             (person) => person.searchIndex.includes(parsedName) && person.searchIndex.includes(parsedAge),
           );
-          return res.status(200).json(asx);
+          return res.status(200).json(filterPeople.map(mapPerson));
         }
-        return res.status(200).json(results);
+        return res.status(200).json(results.map(mapPerson));
       }
     }
 
