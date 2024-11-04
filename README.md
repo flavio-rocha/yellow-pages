@@ -8,7 +8,7 @@ Search is only a single input field, the application parses the input entered by
 John 33 should return all the people who are called John and are 33 years old, while 099373927 Smith should attempt to find a person with the supplied phone number whose name contains "Smith".  
 Should the search yield no results, the app presents the message: No results, please review your search or try a different one
 
-If the search did yield results, they are presented to the user. Each result shown must include the following:
+If the search did yield results, they are presented to the user. Each result include the following:
 
 * Name
 * Age
