@@ -23,7 +23,7 @@ const YellowPagesSearch: FC = () => {
 
   return (
     <div className="yellow-pages-container">
-      <h1>Rapid7 Yellow Pages</h1>
+      <h1>Yellow Pages</h1>
       <input
         type="text"
         value={text}
