@@ -28,9 +28,10 @@ If the search did yield results, they are presented to the user. Each result inc
 ## Setup
 
 1. Clone repo from GitHub at https://github.com/flavio-rocha/yellow-pages
-2. Navigate to *yellow-pages* directory
+2. Navigate to *yellow-pages* directory 
 3. Run *npm i* command (this will install package concurrently)
-   3.1 Run (or trigger) script *npm run install:all*
-4. In browser navigate to http://localhost:3001/
+   3.1. Run (or trigger) script *npm run install:all*
+4. Run (or trigger) script *npm run start*
+5. In browser navigate to http://localhost:3001/
 
 That's all !!!
