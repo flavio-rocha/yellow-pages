@@ -12,10 +12,9 @@ export class Person {
   ) {}
 
   static getCurrentAge(dateOfBirth: string) {
-    const msPerYear = 1000 * 60 * 60 * 24 * 365.25; // Milliseconds in a year (approx.)
+    const msPerYear = 1000 * 60 * 60 * 24 * 365;
     const diff = new Date().getTime() - new Date(dateOfBirth.replace(/\s/g, '')).getTime();
     const age = Math.floor(diff / msPerYear);
-    //const age = new Date().getFullYear() - new Date(dateOfBirth.replace(/\s/g, '')).getFullYear();
 
     return `0${age}`.slice(-2);
   }
