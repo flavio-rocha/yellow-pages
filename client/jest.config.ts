@@ -5,7 +5,7 @@ const config: Config = {
   testEnvironment: 'jsdom', // Simulate a browser environment
   globals: {
     'ts-jest': {
-      tsconfig: 'tsconfig.node.json',
+      tsconfig: 'tsconfig.app.json',
     },
   },
   roots: ['<rootDir>/src'], // Only look for test files inside the "src" folder
