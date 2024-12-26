@@ -29,7 +29,6 @@ export const search = (req: Request, res: Response) => {
 
   try {
     const { parsedName, parsedAge, parsedPhoneNumber } = inputParser(searchInput);
-    console.debug(`Parsed query with name:${parsedName} age:${parsedAge} phoneNumber:${parsedPhoneNumber}`);
 
     if (parsedPhoneNumber) {
       const person = peopleService.searchPhoneNumber(parsedPhoneNumber);
